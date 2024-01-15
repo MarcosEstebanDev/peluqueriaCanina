@@ -1,17 +1,20 @@
-
 package com.mycompany.peluqueriacanina.logica;
+
+import java.io.Serializable;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-@Entity
 
-public class Mascota {
+@Entity
+public class Mascota implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int num_cliente;
+    @Basic
     private String nombre;
     private String raza;
     private String color;
