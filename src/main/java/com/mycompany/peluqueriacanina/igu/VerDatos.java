@@ -1,6 +1,8 @@
 
 package com.mycompany.peluqueriacanina.igu;
 
+import javax.swing.table.DefaultTableModel;
+
 
 public class VerDatos extends javax.swing.JFrame {
 
@@ -23,6 +25,11 @@ public class VerDatos extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
         jLabel1.setText("Visualizacion de Datos");
@@ -132,6 +139,10 @@ public class VerDatos extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+      cargarTabla();
+    }//GEN-LAST:event_formWindowOpened
+
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -144,4 +155,16 @@ public class VerDatos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarTabla() {
+        //definir el modelo de la tabla
+       DefaultTableModel tabla = new DefaultTableModel(){
+           //filas y columnas no editables desde la interface
+           public boolean isCellEditable (int row, int column){
+           return false;
+                  }
+       };
+       //Nombres de las columnas
+       String titulos[] = {"NUM","NOMBRE","RAZA","ALERGICO","AT.ESP","DUEÑO","CEL"};
+    }
 }
