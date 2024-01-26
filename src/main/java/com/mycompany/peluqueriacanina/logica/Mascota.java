@@ -14,7 +14,6 @@ public class Mascota implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int num_cliente;
-    @Basic
     private String nombre;
     private String raza;
     private String color;
