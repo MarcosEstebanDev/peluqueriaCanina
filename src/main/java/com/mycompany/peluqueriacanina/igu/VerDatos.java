@@ -166,5 +166,6 @@ public class VerDatos extends javax.swing.JFrame {
        };
        //Nombres de las columnas
        String titulos[] = {"NUM","NOMBRE","RAZA","ALERGICO","AT.ESP","DUEÑO","CEL"};
+       tabla.setColumnIdentifiers(titulos);
     }
 }
