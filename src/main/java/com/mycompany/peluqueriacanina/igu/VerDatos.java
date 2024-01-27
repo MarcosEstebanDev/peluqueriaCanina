@@ -1,13 +1,18 @@
 
 package com.mycompany.peluqueriacanina.igu;
 
+import com.mycompany.peluqueriacanina.logica.Controladora;
+import com.mycompany.peluqueriacanina.logica.Mascota;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 
 public class VerDatos extends javax.swing.JFrame {
 
+        Controladora control = null;
    
     public VerDatos() {
+        control = new Controladora();
         initComponents();
     }
 
@@ -19,7 +24,7 @@ public class VerDatos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaMascotas = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -34,8 +39,8 @@ public class VerDatos extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
         jLabel1.setText("Visualizacion de Datos");
 
-        jTable1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaMascotas.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        tablaMascotas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -46,7 +51,7 @@ public class VerDatos extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaMascotas);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
         jLabel2.setText("Datos del Cliente:");
@@ -136,7 +141,13 @@ public class VerDatos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+      //validacion de tabla no vacia
+        if(tablaMascotas.getRowCount()> 0){
+         //seleccionar un registro
+            if(tablaMascotas.getSelectedRow()!=-1){
+              int num_cliente = Integer.parseInt(String.valueOf(tablaMascotas.getValueAt(tablaMascotas.getSelectedRow(),0)));
+          }
+      }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -153,19 +164,33 @@ public class VerDatos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaMascotas;
     // End of variables declaration//GEN-END:variables
 
     private void cargarTabla() {
         //definir el modelo de la tabla
-       DefaultTableModel tabla = new DefaultTableModel(){
+       DefaultTableModel modeloTabla = new DefaultTableModel(){
            //filas y columnas no editables desde la interface
+           @Override
            public boolean isCellEditable (int row, int column){
            return false;
                   }
        };
-       //Nombres de las columnas
-       String titulos[] = {"NUM","NOMBRE","RAZA","ALERGICO","AT.ESP","DUEÑO","CEL"};
-       tabla.setColumnIdentifiers(titulos);
+    //Nombres de las columnas
+        String titulos[] = {"Num","Nombre","Color","Raza","Alergico","At.Esp.","Duenio","Cel"};
+       modeloTabla.setColumnIdentifiers(titulos);
+        
+    //Setear los datos desde la DB
+         List<Mascota> listaMascotas = control.traerMascotas();
+     
+     //recorrer la lista y mostrar elementos
+        if(listaMascotas!=null ){
+            for(Mascota masco : listaMascotas){
+            Object[] objeto = {masco.getNum_cliente(), masco.getNombre(), masco.getColor(), masco.getRaza(), masco.getAlergico(), masco.getAtencion_especial(), masco.getUnDuenio().getNombre(), masco.getUnDuenio().getCelDuenio()}; 
+            modeloTabla.addRow(objeto);
     }
+  }
+        tablaMascotas.setModel(modeloTabla);
 }
+}
+

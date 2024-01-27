@@ -1,16 +1,15 @@
 package com.mycompany.peluqueriacanina.logica;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
-
 @Entity
 public class Mascota implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int num_cliente;
@@ -25,8 +24,6 @@ public class Mascota implements Serializable {
 
     public Mascota() {
     }
-    
-    
 
     public Mascota(int num_cliente, String nombre, String raza, String color, String alergico, String atencion_especial, String observaciones) {
         this.num_cliente = num_cliente;
@@ -36,6 +33,7 @@ public class Mascota implements Serializable {
         this.alergico = alergico;
         this.atencion_especial = atencion_especial;
         this.observaciones = observaciones;
+        this.unDuenio = unDuenio;
     }
 
     public int getNum_cliente() {
@@ -94,13 +92,12 @@ public class Mascota implements Serializable {
         this.observaciones = observaciones;
     }
 
-    void setUnDuenio(Duenio duenio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Duenio getUnDuenio() {
+        return unDuenio;
     }
 
-    void setunDuenio(Duenio duenio) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void setUnDuenio(Duenio unDuenio) {
+        this.unDuenio = unDuenio;
     }
-    
-    
+
 }
