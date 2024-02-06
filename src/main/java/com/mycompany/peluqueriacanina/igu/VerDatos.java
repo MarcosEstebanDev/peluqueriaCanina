@@ -4,6 +4,8 @@ package com.mycompany.peluqueriacanina.igu;
 import com.mycompany.peluqueriacanina.logica.Controladora;
 import com.mycompany.peluqueriacanina.logica.Mascota;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -142,18 +144,45 @@ public class VerDatos extends javax.swing.JFrame {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
       //validacion de tabla no vacia
-        if(tablaMascotas.getRowCount()> 0){
+        if(tablaMascotas.getRowCount() >0){
          //seleccionar un registro
             if(tablaMascotas.getSelectedRow()!=-1){
-              int num_cliente = Integer.parseInt(String.valueOf(tablaMascotas.getValueAt(tablaMascotas.getSelectedRow(),0)));
+              //selecciono el id del registro
+                int num_cliente = Integer.parseInt(String.valueOf(tablaMascotas.getValueAt(tablaMascotas.getSelectedRow(),0)));
+              
+              control.borrarMascota(num_cliente);
+              
+              //usuario borrado correctamente
+              mostrarMensaje("Mascota eliminada","Info", "Eliminacion de mascota registrada");
+              cargarTabla();
           }
+            else {
+                mostrarMensaje("No selecciono ningun registro", "error", "Error al eliminar registro");
+            }
       }
+        else {
+            mostrarMensaje("No hay", "Error", "Error al eliminar");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
       cargarTabla();
     }//GEN-LAST:event_formWindowOpened
-
+    
+    public void mostrarMensaje(String mensaje, String tipo, String titulo){
+        
+         JOptionPane optionPane = new JOptionPane(mensaje);
+         if (tipo.equals("Info")){
+        optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+    }
+         else if (tipo.equals("Error")){
+         optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+    }
+        
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+    }
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
